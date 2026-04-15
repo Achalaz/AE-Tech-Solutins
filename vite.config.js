@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: 'Achalaz/AE-Tech-Solutins',
+  base: '/AE-Tech-Solutins/',
 })
