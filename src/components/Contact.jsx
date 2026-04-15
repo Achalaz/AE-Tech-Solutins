@@ -6,11 +6,25 @@ export default function Contact() {
 
   const onChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-    setForm({ firstName: '', lastName: '', email: '', subject: '', message: '' });
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+      if (response.ok) {
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 5000);
+        setForm({ firstName: '', lastName: '', email: '', subject: '', message: '' });
+      } else {
+        alert('Failed to send message. Please check the fields and try again.');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('Failed to connect to the backend server. Make sure it is running.');
+    }
   };
 
   return (
